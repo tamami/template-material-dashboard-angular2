@@ -1,0 +1,48 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h3 class="card-title">Daftar Pengguna</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="mt-3 mb-3">
+                            <button mat-raised-button class="btn btn-primary" [routerLink]="['/admin/add-user']">Tambah</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="text-primary">
+                                    <th>NO</th>
+                                    <th>NAMA</th>
+                                    <th>SUREL</th>
+                                    <th>AKSES</th>
+                                    <th>TERVERIFIKASI</th>
+                                    <th>PILIHAN</th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of users; let i = index">
+                                        <td>{{ i+1 }}</td>
+                                        <td>{{ data.displayName }}</td>
+                                        <td>{{ data.email }}</td>
+                                        <td>{{ data.role }}</td>
+                                        <td>
+                                            <div *ngIf="data.emailVerified; then verified else notVerified"></div>
+                                            <ng-template #verified class="has-success">
+                                                <i class="material-icons">check_box</i>
+                                            </ng-template>
+                                            <ng-template #notVerified>
+                                                <i class="material-icons">indeterminate_check_box</i>
+                                            </ng-template>
+                                        </td>
+                                        <td><button mat-raised-button class="btn btn-warning" (click)="ubahClick(data)">Ubah</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header card-header-danger">
+                <h3 class="card-title" >Ubah Data</h3>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-md-11">
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Nama</mat-label>
+                                <input matInput [(ngModel)]="user.providerData[0].displayName" name="displayName">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-md-11">
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Surel</mat-label>
+                                <input matInput [(ngModel)]="user.email" name="email" readonly>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <!-- <div class="row d-flex justify-content-center">
+                        <div class="col-md-11">
+                            <div class="example-full-width">
+                                <mat-label>Status Verifikasi Surel </mat-label>
+                                <mat-checkbox [(ngModel)]="user.emailVerified" name="emailVerified"></mat-checkbox>
+                            </div>
+                        </div>
+                    </div> -->
+                    <button mat-raised-button class="btn btn-danger" (click)="simpan()">Simpan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

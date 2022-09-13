@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from 'app/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,13 +10,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+    displayName: string;
     private listTitles: any[];
     location: Location;
       mobile_menu_visible: any = 0;
     private toggleButton: any;
     private sidebarVisible: boolean;
 
-    constructor(location: Location,  private element: ElementRef, private router: Router) {
+    constructor(location: Location,  private element: ElementRef, private router: Router, private authService: AuthService) {
       this.location = location;
           this.sidebarVisible = false;
     }
@@ -32,6 +34,13 @@ export class NavbarComponent implements OnInit {
            this.mobile_menu_visible = 0;
          }
      });
+     var localData = JSON.parse(localStorage.getItem('user'));
+     console.log(localData);
+     if(!localData) {
+        this.router.navigate(['/']);
+     } else {
+        this.displayName = localData.displayName;
+     }
     }
 
     sidebarOpen() {
@@ -52,8 +61,6 @@ export class NavbarComponent implements OnInit {
         body.classList.remove('nav-open');
     };
     sidebarToggle() {
-        // const toggleButton = this.toggleButton;
-        // const body = document.getElementsByTagName('body')[0];
         var $toggle = document.getElementsByClassName('navbar-toggler')[0];
 
         if (this.sidebarVisible === false) {
@@ -121,5 +128,9 @@ export class NavbarComponent implements OnInit {
           }
       }
       return 'Dashboard';
+    }
+
+    keluarClick() {
+        this.authService.signOut()
     }
 }

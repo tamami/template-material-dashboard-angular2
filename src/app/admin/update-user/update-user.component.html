@@ -1,0 +1,63 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Identitas Pengguna</h4>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-11">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Nama</mat-label>
+                                        <input matInput [(ngModel)]="user.displayName" name="displayName">
+                                    </mat-form-field>
+                                    <mat-label [ngModel]="displayName"></mat-label>
+                                </div>
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-11">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Surel</mat-label>
+                                        <input matInput [(ngModel)]="user.email" readonly value="`${email}`" name="name">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <!-- <div class="row d-flex justify-content-center">
+                                <div class="col-md-11">
+                                    <div class="example-full-width">
+                                        <mat-label>Status Verifikasi Surel </mat-label>
+                                        <mat-checkbox [(ngModel)]="emailVerified">{{ statusTerverifikasi }}</mat-checkbox>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!-- <div class="row d-flex justify-content-center">
+                                <div class="col-md-11">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Password" type="password" required name="password">
+                                    </mat-form-field>
+                                </div>
+                            </div> -->
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-11">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Akses</mat-label>
+                                        <mat-select [(ngModel)]="user.role" name="role">
+                                            <mat-option *ngFor="let role of roles" [value]="role.role" >
+                                                {{ role.keterangan }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <button mat-raised-button class="btn btn-danger pull-right" (click)="save()">Simpan</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

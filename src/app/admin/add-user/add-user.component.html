@@ -1,0 +1,45 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Identitas Pengguna</h4>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-11">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Surel" type="email" [(ngModel)]="email">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-11">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Password" type="password" [(ngModel)]="password">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-11">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Akses</mat-label>
+                                        <mat-select [(ngModel)]="role">
+                                            <mat-option *ngFor="let role of roles" [value]="role.role" >
+                                                {{ role.keterangan }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <button mat-raised-button class="btn btn-danger pull-right" (click)="register()">Simpan</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
