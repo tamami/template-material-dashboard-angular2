@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { AdminComponent } from './admin/admin.component';
 import { UpdateUserComponent } from './welcome/update-user/update-user.component';
+import { SurveyorComponent } from './surveyor/surveyor.component';
 
 const routes: Routes =[
   { path: '', component: LoginComponent },
@@ -17,6 +18,12 @@ const routes: Routes =[
     {
       path: '',
       loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+    }
+  ]},
+  { path: 'surveyor', component: SurveyorComponent, children: [
+    {
+      path: '',
+      loadChildren: () => import('./surveyor/surveyor.module').then(m => m.SurveyorModule)
     }
   ]},
   { path: 'main', component: AdminLayoutComponent, children: [
@@ -43,9 +50,9 @@ const routes: Routes =[
   imports: [
     CommonModule,
     BrowserModule,
-    RouterModule.forRoot(routes,{
-       useHash: true
-    })
+    RouterModule.forRoot(routes), //{
+    //    useHash: true
+    // })
   ],
   exports: [
     RouterModule

@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { UserService } from './user.service';
 import * as auth from 'firebase/auth';
 import { User } from 'app/model/user';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,11 +19,11 @@ export class AuthService {
       this.afAuth.authState.subscribe((user) => {
         if(user) {
           this.userData = user;
-          localStorage.setItem('user', JSON.stringify(this.userData));
-          JSON.parse(localStorage.getItem('user')!);
+          sessionStorage.setItem('user', JSON.stringify(this.userData));
+          JSON.parse(sessionStorage.getItem('user')!);
         } else {
-          localStorage.setItem('user', 'null');
-          JSON.parse(localStorage.getItem('user')!);
+          sessionStorage.setItem('user', 'null');
+          JSON.parse(sessionStorage.getItem('user')!);
         }
       });
   }
@@ -37,12 +36,18 @@ export class AuthService {
       } 
       this.afAuth.authState.subscribe((user) => {
         if(user) {
-          var role = this.getRole(user);
           this.userService.getRole(user).subscribe(
             resp => {
+              sessionStorage.setItem('userData', JSON.stringify(resp[0]))
               switch(resp[0].role) {
                 case 'admin': {
-                  this.router.navigate(['admin']);
+                  console.log('masuk ke menu admin')
+                  this.router.navigate(['/admin']);
+                  break;
+                }
+                case 'surveyor': {
+                  console.log('masuk surveyor')
+                  this.router.navigate(['/surveyor']);
                   break;
                 }
                 default: {
@@ -56,7 +61,7 @@ export class AuthService {
       });
     })
     .catch((error) => {
-      this._snackbar.open(error.message);
+      this._snackbar.open(error.message, 'info', { duration: 3000 });
       // window.alert(error.message);
     });
   }
@@ -64,9 +69,9 @@ export class AuthService {
   signUp(email: string, password: string) {
     return this.afAuth.createUserWithEmailAndPassword(email, password)
     .then((result) => {
-      console.log('selesai signUp');
       this.sendVerificationMail();
       this.setUserData(result.user);
+      this.router.navigate(['/admin/user-config'])
     })
     .catch((error) => {
       console.log(error);
@@ -95,7 +100,7 @@ export class AuthService {
   }
 
   get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem('user')!);
+    const user = JSON.parse(sessionStorage.getItem('user')!);
     return user !== null && user.emailVerified !== false ? true : false;
   }
 
@@ -122,7 +127,6 @@ export class AuthService {
   getRole(user: any): string {
     this.userService.getRole(user).subscribe(
       resp => {
-        console.log(resp[0].role);
         return resp[0].role;
       }
     )
@@ -160,7 +164,8 @@ export class AuthService {
   signOut() {
     return this.afAuth.signOut()
     .then(() => {
-      localStorage.removeItem('user');
+      sessionStorage.removeItem('user');
+      sessionStorage.removeItem('userData');
       this.router.navigate(['/']);
     })
   }

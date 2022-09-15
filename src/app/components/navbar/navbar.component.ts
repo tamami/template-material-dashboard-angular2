@@ -34,8 +34,7 @@ export class NavbarComponent implements OnInit {
            this.mobile_menu_visible = 0;
          }
      });
-     var localData = JSON.parse(localStorage.getItem('user'));
-     console.log(localData);
+     var localData = JSON.parse(sessionStorage.getItem('userData'));
      if(!localData) {
         this.router.navigate(['/']);
      } else {

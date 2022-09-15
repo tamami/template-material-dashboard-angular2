@@ -22,13 +22,19 @@ export class UserService {
     }).valueChanges()
   }
 
+  getByRole(role: string): Observable<any> {
+    return this.afs.collection('users', ref => {
+      return ref.where('role', '==', role);
+    }).valueChanges()
+  }
+
   getAllUsers(): Observable<any> {
     return this.afs.collection('users').valueChanges();
   }
 
   update(user: any): Promise<void> {
-    console.log(user);
-    console.log(`${user.uid}`);
+    // console.log(user);
+    // console.log(`${user.uid}`);
     return this.afs.doc<any>(`users/${user.uid}`).update(user);
   }
 

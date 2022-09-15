@@ -20,6 +20,7 @@ import { LoginComponent } from './login/login.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { AdminComponent } from './admin/admin.component';
 import { UpdateUserComponent } from './welcome/update-user/update-user.component';
+import { SurveyorComponent } from './surveyor/surveyor.component';
 
 @NgModule({
   imports: [
@@ -44,6 +45,7 @@ import { UpdateUserComponent } from './welcome/update-user/update-user.component
     WelcomeComponent,
     AdminComponent,
     UpdateUserComponent,
+    SurveyorComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

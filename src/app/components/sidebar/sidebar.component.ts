@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'app/services/user.service';
 
 declare const $: any;
 declare interface RouteInfo {
@@ -12,6 +13,8 @@ export const ROUTES: RouteInfo[] = [
     { path: '/admin/user-config', title: 'Konfigurasi Pengguna',  icon:'person', class: 'admin' },
     { path: '/admin/add-user', title: 'Konfigurasi Pengguna', icon: 'person', class: '' },
     { path: '/admin/update-user', title: 'Konfigurasi Pengguna', icon: 'person', class: '' },
+    { path: '/surveyor/dashboard', title: 'Dashboard', icon: 'dashboard', class: 'surveyor' },
+
     // { path: '/admin/table-list', title: 'Table List',  icon:'content_paste', class: '' },
     // { path: '/admin/typography', title: 'Typography',  icon:'library_books', class: '' },
     // { path: '/admin/icons', title: 'Icons',  icon:'bubble_chart', class: '' },
@@ -27,13 +30,15 @@ export const ROUTES: RouteInfo[] = [
 export class SidebarComponent implements OnInit {
   menuItems: any[];
 
-  constructor() { }
+  constructor(private _userService: UserService) { }
 
   ngOnInit() {
-    // this.menuItems = ROUTES.filter(menuItem => menuItem);
+    var userLocal = JSON.parse(sessionStorage.getItem('userData'))
+    console.log(userLocal);
     this.menuItems = ROUTES.filter((data) => {
-      return data.class === 'admin';
+      return data.class === userLocal.role; //'admin';
     });
+    console.log(this.menuItems)
   }
 
   isMobileMenu() {

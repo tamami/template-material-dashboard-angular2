@@ -5,6 +5,7 @@
 
 export const environment = {
   production: false,
+  mongoUrl: 'mongodb+srv://dev:B15m1ll4h@cluster0.kmzrv6z.mongodb.net/sipentol?retryWrites=true&w=majority',
   firebase: {
     apiKey: "AIzaSyD-ijG3DwlbJ_OOFznrFaK3v7Zpxkgqb9g",
     authDomain: "sipentol-brebes.firebaseapp.com",

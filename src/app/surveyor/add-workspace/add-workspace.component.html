@@ -1,0 +1,38 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Unggah Lembar Kerja</h4>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-10">
+                                    <input matInput type="file" placeholder="Berkas Kerja" (change)="fileChange($event)">
+                                </div>
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-10">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Nama Lembar Kerja</mat-label>
+                                        <input matInput [(ngModel)]="workspaceName">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-5">
+                                    <button mat-raised-button class="btn btn-danger" (click)="save()">Simpan</button>
+                                </div>
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                                <div id="map" class="map" style='width: 1200px; height: 700px;'></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
