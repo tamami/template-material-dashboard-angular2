@@ -24,36 +24,42 @@
                 </div>
             </div>
         </div>
-        <div class="row d-flex justify-content-center" >
+        <div class="row d-flex justify-content-center">
             <div class="col-lg-11 col-md-11 col-sm-11">
                 <div class="card card-stats">
                     <div class="card-header card-header-danger">
                         <h4 class="card-title">Daftar Lembar Kerja</h4>
                     </div>
                     <div class="card-body">
-                        <button mat-raised-button class="btn btn-danger" [routerLink]="['/surveyor/add-workspace']">Tambah</button>
+                        <button mat-raised-button class="btn btn-danger" [routerLink]="['/verifikator/add-workspace']">Tambah</button>
+                        <mat-form-field appearance="standard">
+                            <mat-label>Cari</mat-label>
+                            <input matInput (keyup)="search($event)" #input>
+                        </mat-form-field>
                         <div class="mat-elevation-z8 mt-3">
                             <table mat-table [dataSource]="dataSource" matSort>
                                 <ng-container matColumnDef="tglUnggah">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header class="justify-content-center">Tanggal Unggah</th>
-                                    <td mat-cell *matCellDef="let row">{{ row.tglUnggah }}</td>
+                                    <td mat-cell *matCellDef="let data">{{ data.tglUnggah }}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="workspaceName">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Workspace</th>
-                                    <td mat-cell *matCellDef="let row">{{ row.workspaceName }}</td>
+                                    <td mat-cell *matCellDef="let data">{{ data.workspaceName }}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="petugas">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Surveyor</th>
-                                    <td mat-cell *matCellDef="let row">{{ row.petugas }}</td>
+                                    <td mat-cell *matCellDef="let data">{{ data.petugas }}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="draft">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Verifikasi</th>
-                                    <td mat-cell *matCellDef="let row">{{ row.draft }}</td>
+                                    <td mat-cell *matCellDef="let data">{{ data.draft }}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="opsi">
                                     <th mat-header-cell *matHeaderCellDef>Opsi</th>
-                                    <td mat-cell *matCellDef="let row">
-                                        <button mat-raised-button class="btn btn-danger" (click)="hapus(row.docId)">Hapus</button>
+                                    <td mat-cell *matCellDef="let data">
+                                        <button mat-raised-button class="btn btn-danger" (click)="hapus(data.docId)">Hapus</button>
+                                        <button mat-raised-button class="btn btn-primary ml-2" (click)="verifikasi(data.docId)">Verifikasi</button>
+                                        <button mat-raised-button class="btn btn-warning ml-2" (click)="detail(data.docId)">Lihat</button>
                                     </td>
                                 </ng-container>
 

@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Konfirmasi</h1>
+<div mat-dialog-content>
+    <p>Yakin untuk menghapus lembar kerja {{ data.workspaceName }} ?</p>
+</div>
+<div mat-dialog-actions>
+    <div class="row d-flex justify-content-end">
+        <button mat-button (click)="onNoClick()">Tidak</button>
+        <button mat-button (click)="onYesClick()">Ya</button>
+    </div>
+</div>

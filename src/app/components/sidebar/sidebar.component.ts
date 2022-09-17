@@ -14,6 +14,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/admin/add-user', title: 'Konfigurasi Pengguna', icon: 'person', class: '' },
     { path: '/admin/update-user', title: 'Konfigurasi Pengguna', icon: 'person', class: '' },
     { path: '/surveyor/dashboard', title: 'Dashboard', icon: 'dashboard', class: 'surveyor' },
+    { path: '/verifikator/dashboard', title: 'Dashboard', icon: 'dashboard', class: 'verifikator' },
 
     // { path: '/admin/table-list', title: 'Table List',  icon:'content_paste', class: '' },
     // { path: '/admin/typography', title: 'Typography',  icon:'library_books', class: '' },
@@ -34,11 +35,9 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     var userLocal = JSON.parse(sessionStorage.getItem('userData'))
-    console.log(userLocal);
     this.menuItems = ROUTES.filter((data) => {
       return data.class === userLocal.role; //'admin';
     });
-    console.log(this.menuItems)
   }
 
   isMobileMenu() {

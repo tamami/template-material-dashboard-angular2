@@ -4,12 +4,13 @@
             <div class="col-md-10">
                 <div class="card">
                     <div class="card-header card-header-danger">
-                        <h4 class="card-title">Unggah Lembar Kerja</h4>
+                        <h4 class="card-title">Unggah lembar kerja</h4>
                     </div>
                     <div class="card-body">
                         <form>
                             <div class="row d-flex justify-content-center">
                                 <div class="col-md-10">
+                                    <mat-label>Berkas GeoJSON</mat-label>
                                     <input matInput type="file" placeholder="Berkas Kerja" (change)="fileChange($event)">
                                 </div>
                             </div>
@@ -21,7 +22,7 @@
                                     </mat-form-field>
                                 </div>
                             </div>
-                            <div *ngIf="isVerifikator" class="row d-flex justify-content-center">
+                            <div class="row d-flex justify-content-center">
                                 <div class="col-md-10">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>User Surveyor</mat-label>
@@ -35,7 +36,7 @@
                                 </div>
                             </div>
                             <div class="row d-flex justify-content-center">
-                                <div id="map" class="map" style='width: 1200px; height: 700px;'></div>
+                                <div id="map" class="map" style="width: 1200px; height: 700px"></div>
                             </div>
                         </form>
                     </div>

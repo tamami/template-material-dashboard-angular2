@@ -1,13 +1,10 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import * as turf from '@turf/turf';
-import * as L from 'leaflet';
-import * as geojson from 'geojson'
-import { environment } from 'environments/environment';
-import { WorkspacesService } from 'app/services/workspaces.service';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import * as moment from 'moment';
 import { Router } from '@angular/router';
-import { v4 as uuidv4 } from 'uuid'
+import { WorkspacesService } from 'app/services/workspaces.service';
+import * as L from 'leaflet';
+import * as turf from '@turf/turf'
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-add-workspace',
@@ -15,27 +12,17 @@ import { v4 as uuidv4 } from 'uuid'
   styleUrls: ['./add-workspace.component.scss']
 })
 export class AddWorkspaceComponent implements OnInit, AfterViewInit {
-  map: L.Map;
-  workspaceName: string;
-  spatialData: any;
-  isVerifikator = false
+  map: L.Map
+  workspaceName: string
+  spatialData: any
   surveyor: string
+  
+  constructor(private _workspaceService: WorkspacesService, private _snackbar: MatSnackBar, private _router: Router) { }
 
-  constructor(private _workspacesService: WorkspacesService, private _snackbar: MatSnackBar, private _router: Router) { 
-    
-  }
-
-  ngOnInit(): void {
-    var role = JSON.parse(sessionStorage.getItem('userData')).role
-    if(role === 'verifikator') this.isVerifikator = true
-    else this.isVerifikator = false
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    this.map = L.map('map', {
-      zoom: 10
-    })
-
+    this.map = L.map('map', { zoom: 10 })
     var openStreetLayer = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     })
@@ -45,23 +32,20 @@ export class AddWorkspaceComponent implements OnInit, AfterViewInit {
   fileChange(evt) {
     var file = evt.target.files[0]
     var fileReader = new FileReader()
-    fileReader.onload = (e) => {
+    fileReader.onload = e => {
       var objResult = JSON.parse(fileReader.result.toString())
       delete objResult.crs;
       delete objResult.name
-        // .parse(objResult, {GeoJSON: 'geo'})
-      var bbox = turf.bbox(objResult)
       this.spatialData = objResult
       var geoJSONgroup = L.geoJSON(objResult, { onEachFeature: this.getPropertiesOnEachFeature }).addTo(this.map)
       this.map.fitBounds(geoJSONgroup.getBounds())
     }
-    fileReader.readAsText(file);
+    fileReader.readAsText(file)
   }
 
   getPropertiesOnEachFeature(feature, layer) {
-    console.log(feature.properties)
     var content = "<table>" +
-      "<tr>" + 
+      "<tr>" +
       "<td>Alamat OP</td><td>:</td>" +
       "<td>" + feature.properties['Alamat OP'] + "</td>" +
       "</tr>" +
@@ -182,22 +166,17 @@ export class AddWorkspaceComponent implements OnInit, AfterViewInit {
   }
 
   save() {
-    console.log(this.workspaceName)
-    console.log(this.spatialData)
-    console.log(JSON.parse(sessionStorage.getItem('userData')))
-    console.log(uuidv4())
     var email = JSON.parse(sessionStorage.getItem('userData')).email
     var data = {
-      id: uuidv4(),
       workspaceName: this.workspaceName,
       user: email,
-      petugas: (this.isVerifikator) ? this.surveyor : email,
+      petugas: this.surveyor,
       draft: true,
       tglUnggah: moment().format('YYYY-MM-DD'),
       spatialData: JSON.stringify(this.spatialData)
     }
-    
-    this._workspacesService.save(data)
-    this._router.navigate(['/surveyor'])
+    this._workspaceService.save(data)
+    this._router.navigate(['/verifikator'])
   }
+
 }

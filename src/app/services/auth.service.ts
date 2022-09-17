@@ -50,6 +50,10 @@ export class AuthService {
                   this.router.navigate(['/surveyor']);
                   break;
                 }
+                case 'verifikator': {
+                  this.router.navigate(['/verifikator'])
+                  break
+                }
                 default: {
                   this.router.navigate(['welcome']);
                   break;

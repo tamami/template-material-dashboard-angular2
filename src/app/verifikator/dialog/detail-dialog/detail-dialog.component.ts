@@ -1,67 +1,42 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import * as turf from '@turf/turf';
-import * as L from 'leaflet';
-import * as geojson from 'geojson'
-import { environment } from 'environments/environment';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { WorkspacesService } from 'app/services/workspaces.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import * as moment from 'moment';
-import { Router } from '@angular/router';
-import { v4 as uuidv4 } from 'uuid'
+import * as L from 'leaflet';
 
 @Component({
-  selector: 'app-add-workspace',
-  templateUrl: './add-workspace.component.html',
-  styleUrls: ['./add-workspace.component.scss']
+  selector: 'app-detail-dialog',
+  templateUrl: './detail-dialog.component.html',
+  styleUrls: ['./detail-dialog.component.scss']
 })
-export class AddWorkspaceComponent implements OnInit, AfterViewInit {
-  map: L.Map;
-  workspaceName: string;
-  spatialData: any;
-  isVerifikator = false
-  surveyor: string
+export class DetailDialogComponent implements OnInit {
+  map: L.Map
+  workspaceName: string
 
-  constructor(private _workspacesService: WorkspacesService, private _snackbar: MatSnackBar, private _router: Router) { 
-    
-  }
+  constructor(public dialogRef: MatDialogRef<DetailDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any, 
+    private _workspaceService: WorkspacesService) { }
 
   ngOnInit(): void {
-    var role = JSON.parse(sessionStorage.getItem('userData')).role
-    if(role === 'verifikator') this.isVerifikator = true
-    else this.isVerifikator = false
-  }
-
-  ngAfterViewInit(): void {
-    this.map = L.map('map', {
-      zoom: 10
-    })
-
+    this.map = L.map('map', { zoom: 10 })
     var openStreetLayer = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     })
     openStreetLayer.addTo(this.map)
-  }
 
-  fileChange(evt) {
-    var file = evt.target.files[0]
-    var fileReader = new FileReader()
-    fileReader.onload = (e) => {
-      var objResult = JSON.parse(fileReader.result.toString())
-      delete objResult.crs;
-      delete objResult.name
-        // .parse(objResult, {GeoJSON: 'geo'})
-      var bbox = turf.bbox(objResult)
-      this.spatialData = objResult
-      var geoJSONgroup = L.geoJSON(objResult, { onEachFeature: this.getPropertiesOnEachFeature }).addTo(this.map)
-      this.map.fitBounds(geoJSONgroup.getBounds())
-    }
-    fileReader.readAsText(file);
+    this._workspaceService.getDocByDocId(this.data.docId).subscribe({
+      next: val => {
+        console.log(val)
+        this.workspaceName = val.workspaceName
+        var spatialData = JSON.parse(val.spatialData)
+        console.log(spatialData)
+        var geoJSONGroup = L.geoJSON(spatialData, { onEachFeature: this.getPropertiesOnEachFeature }).addTo(this.map)
+        this.map.fitBounds(geoJSONGroup.getBounds())
+      }
+    })
   }
 
   getPropertiesOnEachFeature(feature, layer) {
-    console.log(feature.properties)
     var content = "<table>" +
-      "<tr>" + 
+      "<tr>" +
       "<td>Alamat OP</td><td>:</td>" +
       "<td>" + feature.properties['Alamat OP'] + "</td>" +
       "</tr>" +
@@ -181,23 +156,8 @@ export class AddWorkspaceComponent implements OnInit, AfterViewInit {
     layer.bindPopup(content, { closeButton: false })
   }
 
-  save() {
-    console.log(this.workspaceName)
-    console.log(this.spatialData)
-    console.log(JSON.parse(sessionStorage.getItem('userData')))
-    console.log(uuidv4())
-    var email = JSON.parse(sessionStorage.getItem('userData')).email
-    var data = {
-      id: uuidv4(),
-      workspaceName: this.workspaceName,
-      user: email,
-      petugas: (this.isVerifikator) ? this.surveyor : email,
-      draft: true,
-      tglUnggah: moment().format('YYYY-MM-DD'),
-      spatialData: JSON.stringify(this.spatialData)
-    }
-    
-    this._workspacesService.save(data)
-    this._router.navigate(['/surveyor'])
+  onCloseClick() {
+    this.dialogRef.close()
   }
+
 }

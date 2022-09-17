@@ -10,6 +10,7 @@ import { MatRippleModule } from "@angular/material/core";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { AngularMaterialModule } from "app/angular-material.module";
+import { MatTableModule } from "@angular/material/table";
 
 @NgModule({
     imports: [
@@ -22,6 +23,7 @@ import { AngularMaterialModule } from "app/angular-material.module";
         MatFormFieldModule,
         MatInputModule, 
         AngularMaterialModule,
+        MatTableModule,
     ],
     declarations: [
       DashboardComponent,

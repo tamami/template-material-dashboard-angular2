@@ -9,6 +9,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { AdminComponent } from './admin/admin.component';
 import { UpdateUserComponent } from './welcome/update-user/update-user.component';
 import { SurveyorComponent } from './surveyor/surveyor.component';
+import { VerifikatorComponent } from './verifikator/verifikator.component';
 
 const routes: Routes =[
   { path: '', component: LoginComponent },
@@ -24,6 +25,12 @@ const routes: Routes =[
     {
       path: '',
       loadChildren: () => import('./surveyor/surveyor.module').then(m => m.SurveyorModule)
+    }
+  ]},
+  { path: 'verifikator', component: VerifikatorComponent, children: [
+    {
+      path: '',
+      loadChildren: () => import('./verifikator/verifikator.module').then(m => m.VerifikatorModule)
     }
   ]},
   { path: 'main', component: AdminLayoutComponent, children: [
