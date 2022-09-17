@@ -170,6 +170,8 @@ export class AuthService {
     .then(() => {
       sessionStorage.removeItem('user');
       sessionStorage.removeItem('userData');
+      sessionStorage.clear()
+      localStorage.clear()
       this.router.navigate(['/']);
     })
   }
