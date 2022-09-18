@@ -19,7 +19,7 @@ export class UserService {
   getUserByEmail(email: string): Observable<any> {
     return this.afs.collection('users', ref => {
       return ref.where('email','==',email);
-    }).valueChanges()
+    }).valueChanges({ idField: 'docId' })
   }
 
   getByRole(role: string): Observable<any> {
@@ -29,12 +29,10 @@ export class UserService {
   }
 
   getAllUsers(): Observable<any> {
-    return this.afs.collection('users').valueChanges().pipe(take(1));
+    return this.afs.collection('users').valueChanges() //.pipe(take(1));
   }
 
   update(user: any): Promise<void> {
-    // console.log(user);
-    // console.log(`${user.uid}`);
     return this.afs.doc<any>(`users/${user.uid}`).update(user);
   }
 

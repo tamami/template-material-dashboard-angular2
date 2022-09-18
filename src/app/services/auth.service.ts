@@ -32,23 +32,18 @@ export class AuthService {
     var i=0
     return this.afAuth.signInWithEmailAndPassword(email, password)
     .then((result) => {
-      // console.log(result)
       if(!this.isExists(result.user)) {
         this.setUserData(result.user);
       } 
-      // console.log(result.user.email)
       this.userService.getUserByEmail(result.user.email).subscribe({
         next: val => {
-          // console.log(val)
           sessionStorage.setItem('userData', JSON.stringify(val[0]))
           switch(val[0].role) {
             case 'admin': {
-              console.log('masuk ke menu admin')
               this.router.navigate(['/admin']);
               break;
             }
             case 'surveyor': {
-              console.log('masuk surveyor')
               this.router.navigate(['/surveyor']);
               break;
             }
@@ -104,12 +99,11 @@ export class AuthService {
   signUp(email: string, password: string) {
     return this.afAuth.createUserWithEmailAndPassword(email, password)
     .then((result) => {
-      this.sendVerificationMail();
+      // this.sendVerificationMail();
       this.setUserData(result.user);
       this.router.navigate(['/admin/user-config'])
     })
     .catch((error) => {
-      console.log(error);
       this._snackbar.open(error.message, 'info', { duration: 3000 });
     });
   }
@@ -171,7 +165,6 @@ export class AuthService {
   async isExists(user: any): Promise<boolean> {
     await this.userService.getUserByEmail(user.email).subscribe(
       resp => {
-        console.debug(resp);
         if(resp.length > 0) return true
         else return false
       }
@@ -216,7 +209,6 @@ export class AuthService {
   }
 
   updateUser(user) {
-    console.log(user);
     this.afAuth.updateCurrentUser(user).then(
       () => {
         this.router.navigate(['/welcome']);

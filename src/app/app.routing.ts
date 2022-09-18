@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule, } from '@angular/common';
 import { BrowserModule  } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
-import { AngularFireAuthGuard } from '@angular/fire/compat/auth-guard'
+import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/compat/auth-guard'
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { LoginComponent } from './login/login.component';
@@ -15,8 +15,8 @@ import { VerifikatorComponent } from './verifikator/verifikator.component';
 const routes: Routes =[
   { path: '', component: LoginComponent },
   { path: 'welcome', component: WelcomeComponent },
-  { path: 'update-user', component: UpdateUserComponent, canActivate: [ AngularFireAuthGuard ] },
-  { path: 'admin', component: AdminComponent, canActivate: [ AngularFireAuthGuard ], children: [
+  { path: 'update-user', component: UpdateUserComponent, canActivate: [ AngularFireAuthGuard ], data: { authGuardPipe: () => redirectUnauthorizedTo(['']) } },
+  { path: 'admin', component: AdminComponent, canActivate: [ AngularFireAuthGuard ], data: { authGuardPipe: () => redirectUnauthorizedTo(['']) }, children: [
     {
       path: '',
       loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)

@@ -14,7 +14,6 @@ export class DashboardComponent implements OnInit {
   constructor(private _userService: UserService) { }
 
   ngOnInit(): void {
-    console.log('init on admin.DashboardComponent')
     this._userService.getByRole('admin').subscribe(
       resp => {
         this.jumlahAdmin = resp.length

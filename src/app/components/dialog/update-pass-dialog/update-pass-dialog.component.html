@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Ubah Kunci</h1>
+<div mat-dialog-content>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-11">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Kata Kunci" [(ngModel)]="password" type="password">
+            </mat-form-field>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions class="row d-flex justify-content-end">
+    <button mat-button (click)="save()">Simpan</button>
+</div>

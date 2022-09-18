@@ -3,6 +3,9 @@ import { ROUTES } from '../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from 'app/services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { UpdateProfileComponent } from '../dialog/update-profile/update-profile.component';
+import { UpdatePassDialogComponent } from '../dialog/update-pass-dialog/update-pass-dialog.component';
 
 @Component({
   selector: 'app-navbar',
@@ -13,13 +16,14 @@ export class NavbarComponent implements OnInit {
     displayName: string;
     private listTitles: any[];
     location: Location;
-      mobile_menu_visible: any = 0;
+    mobile_menu_visible: any = 0;
     private toggleButton: any;
     private sidebarVisible: boolean;
 
-    constructor(location: Location,  private element: ElementRef, private router: Router, private authService: AuthService) {
+    constructor(location: Location,  private element: ElementRef, private router: Router, private authService: AuthService, 
+        private _dialog: MatDialog) {
       this.location = location;
-          this.sidebarVisible = false;
+      this.sidebarVisible = false;
     }
 
     ngOnInit(){
@@ -131,5 +135,19 @@ export class NavbarComponent implements OnInit {
 
     keluarClick() {
         this.authService.signOut()
+    }
+
+    updateProfile() {
+        const dialogRef = this._dialog.open(UpdateProfileComponent, {
+            width: '500px',
+            data: {}
+        })
+    }
+
+    updatePassword() {
+        const dialogRef = this._dialog.open(UpdatePassDialogComponent, {
+            width: '500px',
+            data: {}
+        })
     }
 }

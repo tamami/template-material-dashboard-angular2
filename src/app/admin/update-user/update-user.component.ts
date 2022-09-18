@@ -15,7 +15,7 @@ import { AuthService } from 'app/services/auth.service';
   styleUrls: ['./update-user.component.scss']
 })
 export class UpdateUserComponent implements OnInit, AfterViewInit {
-  displayName: string;
+  displayName: string = "";
   email: string;
   password: string;
   emailVerified: boolean;
@@ -36,7 +36,7 @@ export class UpdateUserComponent implements OnInit, AfterViewInit {
       }
     )
 
-    this.user = JSON.parse(localStorage.getItem('data'));
+    this.user = JSON.parse(sessionStorage.getItem('data'));
     console.log(this.user);
     // this.initData().then(
     //   val => {
@@ -47,8 +47,8 @@ export class UpdateUserComponent implements OnInit, AfterViewInit {
 
   initData() {
     return new Promise<any>((_resolve, _reject) => { 
-      var data = JSON.parse(localStorage.getItem('data'));
-      localStorage.removeItem('data');
+      var data = JSON.parse(sessionStorage.getItem('data'));
+      sessionStorage.removeItem('data');
       // this.uid = data.uid;
       // this.displayName = data.displayName;
       // this.email = data.email;
@@ -80,7 +80,7 @@ export class UpdateUserComponent implements OnInit, AfterViewInit {
     console.log(this.user);
     this._userService.update(this.user).finally(
       () => {
-        localStorage.setItem('user', this.user);
+        sessionStorage.setItem('user', this.user);
         this.router.navigate(['admin/user-config']);  
       }
     );

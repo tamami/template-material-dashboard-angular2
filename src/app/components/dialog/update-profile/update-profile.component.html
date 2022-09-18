@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>Profil</h1>
+<div mat-dialog-content>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-11">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Surel" readonly [(ngModel)]="email">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-11">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Nama Alias" [(ngModel)]="displayName">
+            </mat-form-field>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <div class="row d-flex justify-content-end">
+        <button mat-button (click)="onSaveClick()">Simpan</button>
+    </div>
+</div>
