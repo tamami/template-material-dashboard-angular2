@@ -24,7 +24,7 @@ export class UserConfigComponent implements OnInit {
 
   ubahClick(data: any) {
     // this._snackbar.open(uid, 'info', { duration: 3000 });
-    localStorage.setItem('data', JSON.stringify(data));
+    sessionStorage.setItem('data', JSON.stringify(data));
     this.router.navigate(['/admin/update-user']);
   }
 

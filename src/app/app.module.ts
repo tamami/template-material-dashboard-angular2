@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 import { AngularMaterialModule } from './angular-material.module';
 import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireAuthModule, LANGUAGE_CODE, PERSISTENCE } from '@angular/fire/compat/auth';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
@@ -49,7 +49,10 @@ import { VerifikatorComponent } from './verifikator/verifikator.component';
     SurveyorComponent,
     VerifikatorComponent,
   ],
-  providers: [],
+  providers: [
+    { provide: PERSISTENCE, useValue: 'none' }, 
+    { provide: LANGUAGE_CODE, useValue: 'id' }
+  ],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

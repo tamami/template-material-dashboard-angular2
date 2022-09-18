@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +29,7 @@ export class UserService {
   }
 
   getAllUsers(): Observable<any> {
-    return this.afs.collection('users').valueChanges();
+    return this.afs.collection('users').valueChanges().pipe(take(1));
   }
 
   update(user: any): Promise<void> {

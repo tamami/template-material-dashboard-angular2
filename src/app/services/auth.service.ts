@@ -16,53 +16,84 @@ export class AuthService {
   constructor(public afs: AngularFirestore, public afAuth: AngularFireAuth, public router: Router, public ngZone: NgZone,
     private _snackbar: MatSnackBar, private userService: UserService) {
       this.afAuth.languageCode = new Promise(() => "id" );
-      this.afAuth.authState.subscribe((user) => {
-        if(user) {
-          this.userData = user;
-          sessionStorage.setItem('user', JSON.stringify(this.userData));
-          JSON.parse(sessionStorage.getItem('user')!);
-        } else {
-          sessionStorage.setItem('user', 'null');
-          JSON.parse(sessionStorage.getItem('user')!);
-        }
-      });
+      // this.afAuth.authState.subscribe((user) => {
+      //   if(user) {
+      //     this.userData = user;
+      //     sessionStorage.setItem('user', JSON.stringify(this.userData));
+      //     JSON.parse(sessionStorage.getItem('user')!);
+      //   } else {
+      //     sessionStorage.setItem('user', 'null');
+      //     JSON.parse(sessionStorage.getItem('user')!);
+      //   }
+      // });
   }
 
   signIn(email: string, password: string) {
+    var i=0
     return this.afAuth.signInWithEmailAndPassword(email, password)
     .then((result) => {
+      // console.log(result)
       if(!this.isExists(result.user)) {
         this.setUserData(result.user);
       } 
-      this.afAuth.authState.subscribe((user) => {
-        if(user) {
-          this.userService.getRole(user).subscribe(
-            resp => {
-              sessionStorage.setItem('userData', JSON.stringify(resp[0]))
-              switch(resp[0].role) {
-                case 'admin': {
-                  console.log('masuk ke menu admin')
-                  this.router.navigate(['/admin']);
-                  break;
-                }
-                case 'surveyor': {
-                  console.log('masuk surveyor')
-                  this.router.navigate(['/surveyor']);
-                  break;
-                }
-                case 'verifikator': {
-                  this.router.navigate(['/verifikator'])
-                  break
-                }
-                default: {
-                  this.router.navigate(['welcome']);
-                  break;
-                }
-              }
+      // console.log(result.user.email)
+      this.userService.getUserByEmail(result.user.email).subscribe({
+        next: val => {
+          // console.log(val)
+          sessionStorage.setItem('userData', JSON.stringify(val[0]))
+          switch(val[0].role) {
+            case 'admin': {
+              console.log('masuk ke menu admin')
+              this.router.navigate(['/admin']);
+              break;
             }
-          );
+            case 'surveyor': {
+              console.log('masuk surveyor')
+              this.router.navigate(['/surveyor']);
+              break;
+            }
+            case 'verifikator': {
+              this.router.navigate(['/verifikator'])
+              break
+            }
+            default: {
+              this.router.navigate(['welcome']);
+              break;
+            }
+          }
         }
-      });
+      })
+
+      // this.afAuth.authState.subscribe((user) => {
+      //   console.log(user)
+      //   if(user) {
+      //     this.userService.getRole(user).subscribe(
+      //       resp => {
+      //         sessionStorage.setItem('userData', JSON.stringify(resp[0]))
+      //         switch(resp[0].role) {
+      //           case 'admin': {
+      //             console.log('masuk ke menu admin')
+      //             this.router.navigate(['/admin']);
+      //             break;
+      //           }
+      //           case 'surveyor': {
+      //             console.log('masuk surveyor')
+      //             this.router.navigate(['/surveyor']);
+      //             break;
+      //           }
+      //           case 'verifikator': {
+      //             this.router.navigate(['/verifikator'])
+      //             break
+      //           }
+      //           default: {
+      //             this.router.navigate(['welcome']);
+      //             break;
+      //           }
+      //         }
+      //       }
+      //     );
+      //   }
+      // });
     })
     .catch((error) => {
       this._snackbar.open(error.message, 'info', { duration: 3000 });
@@ -166,7 +197,7 @@ export class AuthService {
   }
 
   signOut() {
-    return this.afAuth.signOut()
+    this.afAuth.signOut()
     .then(() => {
       sessionStorage.removeItem('user');
       sessionStorage.removeItem('userData');
@@ -174,6 +205,14 @@ export class AuthService {
       localStorage.clear()
       this.router.navigate(['/']);
     })
+    .catch(reason => {
+      this._snackbar.open(reason, 'Error', { duration: 3000 })
+    })
+    // this.afAuth.authState.subscribe({
+    //   next: val => {
+    //     console.log(val)
+    //   }
+    // })
   }
 
   updateUser(user) {
