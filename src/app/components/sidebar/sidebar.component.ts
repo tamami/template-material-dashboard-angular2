@@ -13,6 +13,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/admin/user-config', title: 'Konfigurasi Pengguna',  icon:'person', class: 'admin' },
     { path: '/admin/add-user', title: 'Konfigurasi Pengguna', icon: 'person', class: '' },
     { path: '/admin/update-user', title: 'Konfigurasi Pengguna', icon: 'person', class: '' },
+    { path: '/admin/workspaces', title: 'Lembar Kerja', icon: 'workspaces', class: 'admin' },
     { path: '/surveyor/dashboard', title: 'Dashboard', icon: 'dashboard', class: 'surveyor' },
     { path: '/verifikator/dashboard', title: 'Dashboard', icon: 'dashboard', class: 'verifikator' },
 

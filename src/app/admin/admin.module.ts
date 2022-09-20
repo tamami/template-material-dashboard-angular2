@@ -12,6 +12,8 @@ import { UserConfigComponent } from "./user-config/user-config.component";
 import { AddUserComponent } from './add-user/add-user.component';
 import { AngularMaterialModule } from "app/angular-material.module";
 import { UpdateUserComponent } from './update-user/update-user.component';
+import { WorkspacesComponent } from './workspaces/workspaces.component';
+import { ConfirmDialogComponent } from './dialog/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
     imports: [
@@ -29,7 +31,9 @@ import { UpdateUserComponent } from './update-user/update-user.component';
         DashboardComponent,
         UserConfigComponent,
         AddUserComponent,
-        UpdateUserComponent
+        UpdateUserComponent,
+        WorkspacesComponent,
+        ConfirmDialogComponent
     ]
 })
 export class AdminModule {}

@@ -34,7 +34,7 @@ const routes: Routes =[
       loadChildren: () => import('./verifikator/verifikator.module').then(m => m.VerifikatorModule)
     }
   ]},
-  { path: 'main', component: AdminLayoutComponent, canActivate: [ AngularFireAuthGuard ], children: [
+  { path: 'main', component: AdminLayoutComponent, children: [
     { 
       path: '',  
       loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)

@@ -15,7 +15,7 @@ export class AuthService {
 
   constructor(public afs: AngularFirestore, public afAuth: AngularFireAuth, public router: Router, public ngZone: NgZone,
     private _snackbar: MatSnackBar, private userService: UserService) {
-      this.afAuth.languageCode = new Promise(() => "id" );
+      // this.afAuth.languageCode = new Promise(() => "id" );
       // this.afAuth.authState.subscribe((user) => {
       //   if(user) {
       //     this.userData = user;

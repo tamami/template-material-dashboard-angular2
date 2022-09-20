@@ -14,6 +14,8 @@ export class WelcomeComponent implements OnInit {
   }
 
   logout() {
+    sessionStorage.clear()
+    localStorage.clear()
     this._authService.signOut()
   }
 

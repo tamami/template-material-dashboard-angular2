@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, CollectionReference, DocumentReference, Query } from '@angular/fire/compat/firestore';
 import { environment } from 'environments/environment';
@@ -13,7 +14,7 @@ export class WorkspacesService {
   petugasFilter$: BehaviorSubject<string>
   verifikasiFilter$: BehaviorSubject<boolean>
 
-  constructor(private afs: AngularFirestore) { }
+  constructor(private afs: AngularFirestore, private _http: HttpClient) { }
 
   save(data: any): Promise<DocumentReference> { 
     console.log(data)
@@ -58,6 +59,20 @@ export class WorkspacesService {
 
   getDocByDocId(docId: string): Observable<any> {
     return this.afs.doc(`workspace/${docId}`).valueChanges().pipe(take(1))
+  }
+
+  /*
+  source : ogre.adc4gis.com
+  source code : github.com/wavded/ogre
+  based source : github.com/wavded/ogr2ogr
+  */
+  getShp(geoJson): Observable<Blob> {
+    let body = new URLSearchParams()
+    body.set('json', geoJson)
+    return this._http.post('http://ogre.adc4gis.com/convertJson', body.toString(), {
+      responseType: 'blob',
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+    })
   }
 
 }
