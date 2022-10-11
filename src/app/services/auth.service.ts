@@ -32,6 +32,7 @@ export class AuthService {
     var i=0
     return this.afAuth.signInWithEmailAndPassword(email, password)
     .then((result) => {
+      console.log(result)
       if(!this.isExists(result.user)) {
         this.setUserData(result.user);
       } 
@@ -58,37 +59,6 @@ export class AuthService {
           }
         }
       })
-
-      // this.afAuth.authState.subscribe((user) => {
-      //   console.log(user)
-      //   if(user) {
-      //     this.userService.getRole(user).subscribe(
-      //       resp => {
-      //         sessionStorage.setItem('userData', JSON.stringify(resp[0]))
-      //         switch(resp[0].role) {
-      //           case 'admin': {
-      //             console.log('masuk ke menu admin')
-      //             this.router.navigate(['/admin']);
-      //             break;
-      //           }
-      //           case 'surveyor': {
-      //             console.log('masuk surveyor')
-      //             this.router.navigate(['/surveyor']);
-      //             break;
-      //           }
-      //           case 'verifikator': {
-      //             this.router.navigate(['/verifikator'])
-      //             break
-      //           }
-      //           default: {
-      //             this.router.navigate(['welcome']);
-      //             break;
-      //           }
-      //         }
-      //       }
-      //     );
-      //   }
-      // });
     })
     .catch((error) => {
       this._snackbar.open(error.message, 'info', { duration: 3000 });
@@ -194,18 +164,15 @@ export class AuthService {
     .then(() => {
       sessionStorage.removeItem('user');
       sessionStorage.removeItem('userData');
-      sessionStorage.clear()
-      localStorage.clear()
-      this.router.navigate(['/']);
     })
     .catch(reason => {
       this._snackbar.open(reason, 'Error', { duration: 3000 })
     })
-    // this.afAuth.authState.subscribe({
-    //   next: val => {
-    //     console.log(val)
-    //   }
-    // })
+    .finally(() => {
+      sessionStorage.clear()
+      localStorage.clear()
+      this.router.navigate(['/']);
+    })
   }
 
   updateUser(user) {

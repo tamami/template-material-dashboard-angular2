@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    alert('login on LoginComponent')
     this.authService.signIn(this.user,this.pass)
   }
 

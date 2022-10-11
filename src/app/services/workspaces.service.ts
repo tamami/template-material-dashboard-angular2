@@ -69,7 +69,7 @@ export class WorkspacesService {
   getShp(geoJson): Observable<Blob> {
     let body = new URLSearchParams()
     body.set('json', geoJson)
-    return this._http.post('http://ogre.adc4gis.com/convertJson', body.toString(), {
+    return this._http.post('https://ogre.adc4gis.com/convertJson', body.toString(), {
       responseType: 'blob',
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
     })

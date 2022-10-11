@@ -9,6 +9,7 @@ import { WorkspacesService } from 'app/services/workspaces.service';
 import { ConfirmDialogComponent } from '../dialog/confirm-dialog/confirm-dialog.component';
 import { saveAs } from 'file-saver'
 import { HttpClient } from '@angular/common/http';
+import { DetailDialogComponent } from 'app/verifikator/dialog/detail-dialog/detail-dialog.component';
 
 
 
@@ -93,7 +94,12 @@ export class WorkspacesComponent implements OnInit {
     }
   }
 
-  detail(docId) {}
+  detail(docId) {
+    const dialogRef = this.dialog.open(DetailDialogComponent, {
+      width: '80%', height: '80%', 
+      data: { docId: docId }
+    })
+  }
 
   exportAttributeToCsv(docId) {
     this._workspaceService.getDocByDocId(docId).subscribe({

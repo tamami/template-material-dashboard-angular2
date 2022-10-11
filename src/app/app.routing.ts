@@ -40,18 +40,6 @@ const routes: Routes =[
       loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)
     }
   ] }
-  // {
-  //   path: '',
-  //   redirectTo: 'dashboard',
-  //   pathMatch: 'full',
-  // }, {
-  //   path: '',
-  //   component: AdminLayoutComponent,
-  //   children: [{
-  //     path: '',
-  //     loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)
-  //   }]
-  // }
 ];
 
 @NgModule({
